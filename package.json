@@ -20,7 +20,7 @@
   "homepage": "https://socialapis.io",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SocialAPIsHub/socialapis-js.git"
+    "url": "git+https://github.com/SocialAPIsHub/socialapis-js.git"
   },
   "bugs": "https://github.com/SocialAPIsHub/socialapis-js/issues",
   "license": "MIT",
@@ -67,7 +67,6 @@
     "vitest": "^2.0.0"
   },
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   }
 }
