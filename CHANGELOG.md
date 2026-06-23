@@ -5,9 +5,11 @@ All notable changes to this project will be documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.0] — Unreleased
+## [0.1.1] — Unreleased
 
-Initial release. Full coverage of the SocialAPIs.io public REST surface in TypeScript/JavaScript — mirrors the Python SDK (`socialapis-sdk` on PyPI).
+Initial TypeScript/JavaScript release. Full coverage of the SocialAPIs.io public REST surface — mirrors the Python (`socialapis-sdk` on PyPI v0.1.1) and Go (`github.com/SocialAPIsHub/socialapis-go` v0.1.1) SDKs.
+
+Starts at 0.1.1 to lockstep the version number across all three language SDKs in this family — no v0.1.0 was ever released for JavaScript.
 
 ### Added — Facebook client
 
