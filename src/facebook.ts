@@ -44,17 +44,26 @@ export class Facebook extends BaseClient {
 
   /** Return recent posts from a Facebook Page (cursor-paginated). */
   getPagePosts(page: string, extra?: Extra): Promise<Record<string, any>> {
-    return this.get("/facebook/pages/posts", this.buildParams({ link: asFacebookUrl(page) }, extra));
+    return this.get(
+      "/facebook/pages/posts",
+      this.buildParams({ link: asFacebookUrl(page) }, extra),
+    );
   }
 
   /** Return Reels (short videos) from a Facebook Page. */
   getPageReels(page: string, extra?: Extra): Promise<Record<string, any>> {
-    return this.get("/facebook/pages/reels", this.buildParams({ link: asFacebookUrl(page) }, extra));
+    return this.get(
+      "/facebook/pages/reels",
+      this.buildParams({ link: asFacebookUrl(page) }, extra),
+    );
   }
 
   /** Return long-form videos from a Facebook Page. */
   getPageVideos(page: string, extra?: Extra): Promise<Record<string, any>> {
-    return this.get("/facebook/pages/videos", this.buildParams({ link: asFacebookUrl(page) }, extra));
+    return this.get(
+      "/facebook/pages/videos",
+      this.buildParams({ link: asFacebookUrl(page) }, extra),
+    );
   }
 
   // ====================================================================
@@ -246,10 +255,7 @@ export class Facebook extends BaseClient {
 
   /** Resolve a city name to GPS coordinates for use as a Marketplace location filter. */
   getCityCoordinates(city: string, extra?: Extra): Promise<Record<string, any>> {
-    return this.get(
-      "/facebook/marketplace/city-coordinates",
-      this.buildParams({ city }, extra),
-    );
+    return this.get("/facebook/marketplace/city-coordinates", this.buildParams({ city }, extra));
   }
 
   /** Search Marketplace vehicle listings. Required filters via extra: lat/lng. */

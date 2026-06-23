@@ -111,7 +111,9 @@ describe("Facebook endpoint routing", () => {
     });
     const fb = new Facebook({ apiToken: "t", fetch: fetchImpl });
     await fb.getGroupId("gieldagryplanszowe");
-    expect(capturedUrl).toContain(encodeURIComponent("https://www.facebook.com/groups/gieldagryplanszowe"));
+    expect(capturedUrl).toContain(
+      encodeURIComponent("https://www.facebook.com/groups/gieldagryplanszowe"),
+    );
   });
 
   it("searchAds forwards extra query params", async () => {

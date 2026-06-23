@@ -126,7 +126,9 @@ export class BaseClient {
 async function safeJson(response: Response): Promise<Record<string, unknown>> {
   try {
     const data = await response.clone().json();
-    return typeof data === "object" && data !== null && !Array.isArray(data) ? (data as Record<string, unknown>) : {};
+    return typeof data === "object" && data !== null && !Array.isArray(data)
+      ? (data as Record<string, unknown>)
+      : {};
   } catch {
     return {};
   }
