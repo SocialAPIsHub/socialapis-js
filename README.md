@@ -172,7 +172,7 @@ One credit per successful response. Failed calls (4xx caused by bad input) don't
 
 - **Python**: [`socialapis-sdk`](https://pypi.org/project/socialapis-sdk/) on PyPI — same surface
 - **Go**: [`github.com/SocialAPIsHub/socialapis-go`](https://github.com/SocialAPIsHub/socialapis-go)
-- **PHP**: coming soon — [notify me](https://socialapis.io/api-sources)
+- **PHP**: not available yet — [tell us if you need it](https://socialapis.io/contact-us)
 - Any language right now: hit the REST API directly with `curl` / `fetch`. Docs at [docs.socialapis.io](https://docs.socialapis.io).
 
 ## Support
