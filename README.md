@@ -44,7 +44,7 @@ const page = await fb.getPageInfo("EngenSA");
 
 **Pages**: `getPageId`, `getPageInfo` → `PageInfo`, `getPagePosts`, `getPageReels`, `getPageVideos`
 
-**Groups**: `getGroupId`, `getGroupDetails` → `GroupInfo`, `getGroupMetadata`, `getGroupPosts`, `getGroupVideos`
+**Groups**: `getGroupId`, `getGroupDetails` → `GroupInfo`, `getGroupPosts`, `getGroupVideos`
 
 **Posts**: `getPostId`, `getPostDetails`, `getPostDetailsExtended`, `getPostComments`, `getCommentReplies`, `getPostAttachments`, `getVideoPostDetails`
 
