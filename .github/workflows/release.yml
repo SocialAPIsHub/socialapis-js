@@ -1,13 +1,13 @@
 name: Release
 
 # Triggers on git tag push `vX.Y.Z`. Builds + publishes to npm via
-# OIDC-based provenance (no NPM_TOKEN required on the action — uses
-# Trusted Publishing equivalent for npm, available since 2024).
+# Trusted Publishing (OIDC): no NPM_TOKEN secret, and provenance is
+# attached automatically. Needs npm >= 11.5.1, hence the npm upgrade step.
 #
 # Setup once on npm:
-#   npmjs.com → access tokens → enable "trusted publishing" for the
-#   socialapis-sdk package pointing at SocialAPIsHub/socialapis-js
-#   and the release.yml workflow.
+#   npmjs.com → socialapis-sdk → Settings → Trusted Publisher →
+#   GitHub Actions, organization SocialAPIsHub, repository
+#   socialapis-js, workflow filename release.yml.
 
 on:
   push:
@@ -29,8 +29,9 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm@latest
       - run: npm ci || npm install
       - run: npm test
       - run: npm run build
@@ -42,6 +43,4 @@ jobs:
             echo "::error::Tag ${tag} does not match package.json version ${pkg_version}"
             exit 1
           fi
-      - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish --access public
