@@ -1,6 +1,6 @@
 {
   "name": "socialapis-sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "TypeScript/JavaScript SDK for Facebook and Instagram public data. Drop-in replacement patterns for stale scrapers. No OAuth, REST + MCP, 200 free calls/month.",
   "keywords": [
     "facebook",

@@ -87,10 +87,14 @@ export class Facebook extends BaseClient {
     return body as GroupInfo;
   }
 
-  /** Return lightweight Group metadata (name, id, url, image). Cheaper than getGroupDetails. */
+  /**
+   * @deprecated Use {@link getGroupDetails}. The API has no `/facebook/groups/metadata`
+   * endpoint, so this returned 404 in 0.1.1. It now calls `/facebook/groups/details`
+   * and returns the raw JSON. Will be removed in 0.2.0.
+   */
   getGroupMetadata(group: string, extra?: Extra): Promise<Record<string, any>> {
     return this.get(
-      "/facebook/groups/metadata",
+      "/facebook/groups/details",
       this.buildParams({ link: asFacebookGroupUrl(group) }, extra),
     );
   }

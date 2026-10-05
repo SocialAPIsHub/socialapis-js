@@ -208,3 +208,18 @@ describe("Migration aliases", () => {
     expect(fb).toBeInstanceOf(Facebook);
   });
 });
+
+describe("Facebook.getGroupMetadata (deprecated)", () => {
+  it("calls the real /facebook/groups/details endpoint", async () => {
+    let capturedUrl = "";
+    const fetchImpl = mockFetch((url) => {
+      capturedUrl = url;
+      return new Response(JSON.stringify({ group_id: "187988788687356" }), { status: 200 });
+    });
+    const fb = new Facebook({ apiToken: "t", fetch: fetchImpl });
+    const data = await fb.getGroupMetadata("gieldagryplanszowe");
+    expect(capturedUrl).toContain("/facebook/groups/details");
+    expect(capturedUrl).not.toContain("/facebook/groups/metadata");
+    expect(data).toEqual({ group_id: "187988788687356" });
+  });
+});
