@@ -223,3 +223,62 @@ describe("Facebook.getGroupMetadata (deprecated)", () => {
     expect(data).toEqual({ group_id: "187988788687356" });
   });
 });
+
+describe("Facebook albums", () => {
+  it("getPageAlbums sends profile_id and extras to /facebook/pages/albums", async () => {
+    let capturedUrl = "";
+    const fetchImpl = mockFetch((url) => {
+      capturedUrl = url;
+      return new Response(JSON.stringify({ albums: [] }), { status: 200 });
+    });
+    const fb = new Facebook({ apiToken: "t", fetch: fetchImpl });
+    await fb.getPageAlbums("100044395330646", { limit: 16 });
+    const u = new URL(capturedUrl);
+    expect(u.pathname).toBe("/facebook/pages/albums");
+    expect(u.searchParams.get("profile_id")).toBe("100044395330646");
+    expect(u.searchParams.get("limit")).toBe("16");
+  });
+
+  it("getGroupAlbums sends group_id to /facebook/groups/albums", async () => {
+    let capturedUrl = "";
+    const fetchImpl = mockFetch((url) => {
+      capturedUrl = url;
+      return new Response(JSON.stringify({ albums: [] }), { status: 200 });
+    });
+    const fb = new Facebook({ apiToken: "t", fetch: fetchImpl });
+    await fb.getGroupAlbums("187988788687356");
+    const u = new URL(capturedUrl);
+    expect(u.pathname).toBe("/facebook/groups/albums");
+    expect(u.searchParams.get("group_id")).toBe("187988788687356");
+  });
+
+  it("getAlbumItems sends album_id and end_cursor to /facebook/albums/items", async () => {
+    let capturedUrl = "";
+    const fetchImpl = mockFetch((url) => {
+      capturedUrl = url;
+      return new Response(JSON.stringify({ items: [] }), { status: 200 });
+    });
+    const fb = new Facebook({ apiToken: "t", fetch: fetchImpl });
+    await fb.getAlbumItems("826298618859975", { end_cursor: "abc" });
+    const u = new URL(capturedUrl);
+    expect(u.pathname).toBe("/facebook/albums/items");
+    expect(u.searchParams.get("album_id")).toBe("826298618859975");
+    expect(u.searchParams.get("end_cursor")).toBe("abc");
+  });
+});
+
+describe("Facebook.getGroupVideos", () => {
+  it("sends link (not group_id) to /facebook/groups/videos", async () => {
+    let capturedUrl = "";
+    const fetchImpl = mockFetch((url) => {
+      capturedUrl = url;
+      return new Response(JSON.stringify({ videos: [] }), { status: 200 });
+    });
+    const fb = new Facebook({ apiToken: "t", fetch: fetchImpl });
+    await fb.getGroupVideos("187988788687356");
+    const u = new URL(capturedUrl);
+    expect(u.pathname).toBe("/facebook/groups/videos");
+    expect(u.searchParams.get("link")).toBe("https://www.facebook.com/groups/187988788687356");
+    expect(u.searchParams.get("group_id")).toBeNull();
+  });
+});
