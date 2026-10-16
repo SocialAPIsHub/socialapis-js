@@ -116,7 +116,7 @@ export class Facebook extends BaseClient {
     );
   }
 
-  /** Return videos posted to a Facebook Group. Takes a numeric group_id. */
+  /** Return videos posted to a Facebook Group. `group` can be the group URL, slug or numeric ID. */
   getGroupVideos(group: string, extra?: Extra): Promise<Record<string, any>> {
     return this.get(
       "/facebook/groups/videos",
