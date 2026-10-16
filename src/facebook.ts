@@ -117,8 +117,11 @@ export class Facebook extends BaseClient {
   }
 
   /** Return videos posted to a Facebook Group. Takes a numeric group_id. */
-  getGroupVideos(groupId: string, extra?: Extra): Promise<Record<string, any>> {
-    return this.get("/facebook/groups/videos", this.buildParams({ group_id: groupId }, extra));
+  getGroupVideos(group: string, extra?: Extra): Promise<Record<string, any>> {
+    return this.get(
+      "/facebook/groups/videos",
+      this.buildParams({ link: asFacebookGroupUrl(group) }, extra),
+    );
   }
 
   /**

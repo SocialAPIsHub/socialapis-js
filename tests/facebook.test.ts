@@ -266,3 +266,19 @@ describe("Facebook albums", () => {
     expect(u.searchParams.get("end_cursor")).toBe("abc");
   });
 });
+
+describe("Facebook.getGroupVideos", () => {
+  it("sends link (not group_id) to /facebook/groups/videos", async () => {
+    let capturedUrl = "";
+    const fetchImpl = mockFetch((url) => {
+      capturedUrl = url;
+      return new Response(JSON.stringify({ videos: [] }), { status: 200 });
+    });
+    const fb = new Facebook({ apiToken: "t", fetch: fetchImpl });
+    await fb.getGroupVideos("187988788687356");
+    const u = new URL(capturedUrl);
+    expect(u.pathname).toBe("/facebook/groups/videos");
+    expect(u.searchParams.get("link")).toBe("https://www.facebook.com/groups/187988788687356");
+    expect(u.searchParams.get("group_id")).toBeNull();
+  });
+});
