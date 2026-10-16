@@ -42,9 +42,11 @@ const page = await fb.getPageInfo("EngenSA");
 
 ### Facebook client
 
-**Pages**: `getPageId`, `getPageInfo` → `PageInfo`, `getPagePosts`, `getPageReels`, `getPageVideos`
+**Pages**: `getPageId`, `getPageInfo` → `PageInfo`, `getPagePosts`, `getPageReels`, `getPageVideos`, `getPageAlbums`
 
-**Groups**: `getGroupId`, `getGroupDetails` → `GroupInfo`, `getGroupPosts`, `getGroupVideos`
+**Groups**: `getGroupId`, `getGroupDetails` → `GroupInfo`, `getGroupPosts`, `getGroupVideos`, `getGroupAlbums`
+
+**Albums**: `getAlbumItems` (page or group album)
 
 **Posts**: `getPostId`, `getPostDetails`, `getPostDetailsExtended`, `getPostComments`, `getCommentReplies`, `getPostAttachments`, `getVideoPostDetails`
 

@@ -66,6 +66,15 @@ export class Facebook extends BaseClient {
     );
   }
 
+  /**
+   * Return the photo albums of a Facebook Page. Takes the numeric page ID
+   * (resolve a URL with {@link getPageId}). Optional extras: `limit` (8-16),
+   * `end_cursor`. Use {@link getAlbumItems} for the photos in one album.
+   */
+  getPageAlbums(profileId: string, extra?: Extra): Promise<Record<string, any>> {
+    return this.get("/facebook/pages/albums", this.buildParams({ profile_id: profileId }, extra));
+  }
+
   // ====================================================================
   // GROUPS
   // ====================================================================
@@ -110,6 +119,23 @@ export class Facebook extends BaseClient {
   /** Return videos posted to a Facebook Group. Takes a numeric group_id. */
   getGroupVideos(groupId: string, extra?: Extra): Promise<Record<string, any>> {
     return this.get("/facebook/groups/videos", this.buildParams({ group_id: groupId }, extra));
+  }
+
+  /**
+   * Return the photo albums of a public Facebook Group. Takes the numeric
+   * group ID (resolve a URL with {@link getGroupId}). Optional extra: `limit` (8-16).
+   */
+  getGroupAlbums(groupId: string, extra?: Extra): Promise<Record<string, any>> {
+    return this.get("/facebook/groups/albums", this.buildParams({ group_id: groupId }, extra));
+  }
+
+  /**
+   * Return the photos and videos inside a Facebook album (page or group).
+   * `albumId` comes from {@link getPageAlbums} or {@link getGroupAlbums}.
+   * Optional extra: `end_cursor`.
+   */
+  getAlbumItems(albumId: string, extra?: Extra): Promise<Record<string, any>> {
+    return this.get("/facebook/albums/items", this.buildParams({ album_id: albumId }, extra));
   }
 
   // ====================================================================
