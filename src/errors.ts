@@ -41,7 +41,7 @@ export class APIError extends SocialAPIsError {
   }
 }
 
-/** 4xx (excluding 401 / 402 / 429). Client-side mistake — NOT safe to retry without fixing input. */
+/** 4xx (excluding 401 / 429 and the out-of-credits 402 / 403). Client-side mistake — NOT safe to retry without fixing input. */
 export class BadRequestError extends APIError {
   constructor(message: string, opts: APIErrorOptions) {
     super(message, opts);
@@ -57,7 +57,7 @@ export class AuthenticationError extends APIError {
   }
 }
 
-/** 402 — credit balance exhausted. Retrying after refill / upgrade works. */
+/** 403 "Insufficient credits" (or 402) — not enough credits left. Retrying after refill / upgrade works. */
 export class InsufficientCreditsError extends APIError {
   constructor(message: string, opts: APIErrorOptions) {
     super(message, opts);
