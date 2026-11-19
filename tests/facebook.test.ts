@@ -167,6 +167,44 @@ describe("Facebook error mapping", () => {
     await expect(fb.getPageInfo("EngenSA")).rejects.toBeInstanceOf(InsufficientCreditsError);
   });
 
+  it("403 Insufficient credits → InsufficientCreditsError", async () => {
+    const fetchImpl = mockFetch(
+      () =>
+        new Response(
+          JSON.stringify({
+            error: "Insufficient credits",
+            message: "You need 3 credits",
+            creditsNeeded: 3,
+          }),
+          {
+            status: 403,
+            headers: { "content-type": "application/json" },
+          },
+        ),
+    );
+    const fb = new Facebook({ apiToken: "t", fetch: fetchImpl });
+    await expect(fb.getPageInfo("EngenSA")).rejects.toBeInstanceOf(InsufficientCreditsError);
+  });
+
+  it("403 expired plan stays BadRequestError", async () => {
+    const fetchImpl = mockFetch(
+      () =>
+        new Response(
+          JSON.stringify({
+            success: false,
+            message: "Subscription expired",
+            code: "SUBSCRIPTION_EXPIRED",
+          }),
+          {
+            status: 403,
+            headers: { "content-type": "application/json" },
+          },
+        ),
+    );
+    const fb = new Facebook({ apiToken: "t", fetch: fetchImpl });
+    await expect(fb.getPageInfo("EngenSA")).rejects.toBeInstanceOf(BadRequestError);
+  });
+
   it("429 → RateLimitError with retryAfterSeconds", async () => {
     const fetchImpl = mockFetch(
       () =>

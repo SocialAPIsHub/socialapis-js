@@ -102,6 +102,12 @@ export class BaseClient {
       const requestId = response.headers.get("x-request-id") ?? undefined;
       const opts = { statusCode: response.status, requestId, body };
 
+      // Out of credits: the API answers 403 {"error": "Insufficient credits",
+      // "creditsNeeded": n}. 402 is kept for compatibility.
+      if (response.status === 403 && isCreditError(body)) {
+        throw new InsufficientCreditsError(message, opts);
+      }
+
       switch (response.status) {
         case 401:
           throw new AuthenticationError(message, opts);
@@ -140,6 +146,14 @@ async function safeText(response: Response): Promise<string> {
   } catch {
     return "";
   }
+}
+
+/** A 403 that is about credits (not a paused account or an expired plan). */
+function isCreditError(body: Record<string, unknown>): boolean {
+  if ("creditsNeeded" in body) return true;
+  return ["error", "message"].some(
+    (k) => typeof body[k] === "string" && (body[k] as string).toLowerCase().includes("credit"),
+  );
 }
 
 function extractMessage(body: Record<string, unknown>): string | undefined {
